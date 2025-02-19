@@ -57,28 +57,34 @@ void loop() {
       if (currentMillis - previousMillis >= 200) { 
         previousMillis = currentMillis;
 
-        // Sending trigger pulse to peripheral
-        digitalWrite(trigPin, LOW);
-        delayMicroseconds(2); // good practice to send low state to peripheral first
-        digitalWrite(trigPin, HIGH);
-        delayMicroseconds(10);
-        digitalWrite(trigPin, LOW);
+        if (writeChar.written()) {
+          if (writeChar.value()) {
 
-        // Calculation output pulse duration
-        duration = pulseIn(echoPin, HIGH);
+            // Sending trigger pulse to peripheral
+            digitalWrite(trigPin, LOW);
+            delayMicroseconds(2); // good practice to send low state to peripheral first
+            digitalWrite(trigPin, HIGH);
+            delayMicroseconds(10);
+            digitalWrite(trigPin, LOW);
 
-        // Calibrating sensor
-        distanceCm = duration / 58;
-        distanceInch = duration / 148;
-        Serial.print("Distance: ");
-        Serial.print(distanceCm);
-        Serial.print(" cm/");
-        Serial.print(distanceInch);
-        Serial.println(" in");
-        delay(10);
+            // Calculation output pulse duration
+            duration = pulseIn(echoPin, HIGH);
 
-        readChar.writeValue(distanceCm);
-        Serial.println("Distance printed to peripheral");
+            // Calibrating sensor
+            distanceCm = duration / 58;
+            distanceInch = duration / 148;
+            Serial.print("Distance: ");
+            Serial.print(distanceCm);
+            Serial.print(" cm/");
+            Serial.print(distanceInch);
+            Serial.println(" in");
+            delay(10);
+
+            readChar.writeValue(distanceCm);
+            Serial.println("Distance printed to peripheral");
+
+         }
+        }
 
       }
     }
