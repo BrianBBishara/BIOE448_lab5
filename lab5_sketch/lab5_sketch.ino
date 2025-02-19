@@ -1,3 +1,9 @@
+#include <ArduinoBLE.h>
+
+BLEService newService("180A"); // creating the service
+BLEByteCharacteristic readChar("2A57", BLERead);
+BLEByteCharacteristic writeChar("2A58", BLEWrite);
+
 const int trigPin = 8;
 const int echoPin = 10;
 long duration;
@@ -10,6 +16,25 @@ void setup() {
   pinMode(echoPin, INPUT);
 
   Serial.begin(9600);
+
+  while(!Serial);
+  if (!BLE.begin()){
+    Serial.println("Waiting for ArduinoBLE");
+    while(1);
+
+  BLE.setDeviceName("Brian_Cameron_Akshay");
+  BLE.setAdvertisedService(newService);
+  newService.addCharacteristic(readChar);
+  newService.addCharacteristic(writeChar);
+  BLE.addService(newService);
+
+  readChar.writeValue(0);
+  writeChar.writeValue(0);
+
+  BLE.advertise();
+  Serial.println("Bluetooth device active");
+
+}
 
 }
 
