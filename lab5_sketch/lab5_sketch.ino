@@ -21,6 +21,7 @@ void setup() {
   if (!BLE.begin()){
     Serial.println("Waiting for ArduinoBLE");
     while(1);
+  }
 
   BLE.setDeviceName("Brian_Cameron_Akshay");
   BLE.setAdvertisedService(newService);
@@ -33,8 +34,6 @@ void setup() {
 
   BLE.advertise();
   Serial.println("Bluetooth device active");
-
-}
 
 }
 
