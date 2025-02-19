@@ -1,5 +1,5 @@
-const int trigPin = 11;
-const int echoPin = 12;
+const int trigPin = 8;
+const int echoPin = 10;
 long duration;
 int distanceCm, distanceInch;
 
@@ -8,10 +8,6 @@ void setup() {
   // peripheral pins
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
-
-  // LED pins
-  pinMode(3, OUTPUT);
-  pinMode(4, OUTPUT);
 
   Serial.begin(9600);
 
@@ -31,20 +27,10 @@ void loop() {
   duration = pulseIn(echoPin, HIGH);
 
   // Calibrating sensor
-@@ -30,6 +37,17 @@
   Serial.print(" cm/");
   Serial.print(distanceInch);
   Serial.println(" in");
 
-  // LED feedback for distance
-    if (distanceInch > 10) {
-    digitalWrite(3, HIGH);
-    digitalWrite(4, LOW);
-  } 
-  else {
-    digitalWrite(4, HIGH);
-    digitalWrite(3, LOW);   
-  }
 
   delay(1000);
 
